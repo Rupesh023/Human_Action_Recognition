@@ -1,12 +1,24 @@
+import requests
 import streamlit as st
 import numpy as np
 from PIL import Image
-import tensorflow as tf
+import tensorflow 
 from keras.models import load_model
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.applications import InceptionV3
+
+# Function to download the model weights file
+def download_model_weights(url, save_path):
+    response = requests.get(url)
+    with open(save_path, 'wb') as f:
+        f.write(response.content)
+
+# Download the model weights if not already present
+model_weights_url = "https://github.com/Rupesh023/Human_Action_Recognition/edit/main/inception_model.h5"
+local_model_weights_path = "inception_model.h5"
+download_model_weights(model_weights_url, local_model_weights_path)
 
 # Function to read and preprocess the image
 def read_image(fn):
@@ -22,7 +34,7 @@ inception_model.compile(optimizer='adam', loss='categorical_crossentropy', metri
 
 # Load the pre-trained ResNet model
 model = inception_model
-model.load_weights("C:/Users/Dell/Desktop/Celebal_Project/inception_model.h5")
+model.load_weights(local_model_weights_path)
 
 # Action label mapping
 label_map = {
@@ -69,5 +81,5 @@ def main():
         st.write(f"Predicted Action: {label_map[predicted_class]}")
         st.write(f"Probability: {probability:.2f}%")
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     main()
