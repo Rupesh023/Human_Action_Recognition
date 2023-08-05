@@ -65,7 +65,7 @@ def make_prediction(test_image):
 # Streamlit app
 def main():
     st.title("Human Action Recognition")
-    st.write("Upload an image and let the model predict the action present in it.")
+    st.write("Upload an image to predict the action behind it.")
 
     uploaded_image = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
@@ -79,7 +79,7 @@ def main():
 
         # Display the prediction
         st.write(f"Predicted Action: {label_map[predicted_class]}")
-        st.write(f"Probability: {probability:.2f}%")
+        st.write(f"Accuracy: {probability:.2f}%")
 
 if __name__ == "__main__":
     main()
